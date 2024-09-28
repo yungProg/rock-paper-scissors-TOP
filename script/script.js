@@ -52,7 +52,23 @@ function playRound(humanChoice, computerChoice) {
     }
 }
 
-const humanSelection = getHumanChoice()
-const computerSelection = getComputerChoice()
 
-playRound(humanSelection, computerSelection)
+function playGame(numberOfRounds) {
+    let rounds = 0;
+    while (rounds < numberOfRounds) {
+    const humanSelection = getHumanChoice();
+    const computerSelection = getComputerChoice();
+
+    playRound(humanSelection, computerSelection);
+    rounds++;
+    }
+    
+    const gameResult = humanScore > computerScore ? "You won!" :
+    humanScore < computerScore ? "You lost!" : 
+    "Draw!";
+
+    console.log("Game result: " + "\n" + gameResult);
+    
+}
+
+playGame(5)
