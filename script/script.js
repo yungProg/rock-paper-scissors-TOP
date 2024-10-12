@@ -1,3 +1,8 @@
+const options = document.querySelector(".options")
+const humanScoreDisplay = document.querySelector(".human-score");
+const computerScoreDisplay = document.querySelector(".computer-score")
+const resultsDisplay = document.querySelector(".results")
+
 function getComputerChoice() {
     const generateRandomNumber = Math.floor(Math.random() * 9);
     let generatedOption = "";
@@ -20,17 +25,8 @@ function getComputerChoice() {
     return generatedOption;
 }
 
-function getHumanChoice() {
-    getHumanOption = prompt("Enter your option: ");
-    const choices = ["rock", "paper", "scissor"];
-        if (!choices.includes(getHumanOption.toLowerCase())) {
-            return "Invalid";
-        }
-    return getHumanOption.toLowerCase();
-}
 
-
-function playGame(numberOfRounds) {
+function playGame() {
 
     let humanScore = 0
     let computerScore = 0
@@ -43,36 +39,44 @@ function playGame(numberOfRounds) {
             case humanChoice === "scissor" && computerChoice === "rock":
             case humanChoice === "Invalid":
                 computerScore += 1;
-                console.log(`You lost! ${computerChoice} beats ${humanChoice}`);
+                computerScoreDisplay.textContent = computerScore;
+                resultsDisplay.textContent = `You lost! ${computerChoice} beats ${humanChoice}`;
                 break;
 
             case humanChoice === "rock" && computerChoice === "scissor":
             case humanChoice === "paper" && computerChoice === "rock":
             case humanChoice === "scissor" && computerChoice === "paper":
                 humanScore += 1;
-                console.log(`You won! ${humanChoice} beats ${computerChoice}`);
+                humanScoreDisplay.textContent = humanScore;
+                resultsDisplay.textContent = `You won! ${humanChoice} beats ${computerChoice}`;
                 break;
 
             default:
-                console.log(`Draw! You choose ${humanChoice} and computer choose ${computerChoice}`);
+                resultsDisplay.textContent = `Draw! You choose ${humanChoice} and computer choose ${computerChoice}`;
                 break;
+        }
+        if (humanScore === 5 || computerScore === 5) {
+            const gameResult = humanScore === 5 ? "You won!" : "You lost!" ;
+            resultsDisplay.textContent = gameResult;
+            
+            
         }
     }    
 
-    let round = 0;
-    while (round < numberOfRounds) {
-        const humanSelection = getHumanChoice();
-        const computerSelection = getComputerChoice();
-        playRound(humanSelection, computerSelection)
-        round++
-    }
-    const gameResult = humanScore > computerScore ? "You won!" :
-    humanScore < computerScore ? "You lost!" : 
-    "Draw!";
-    console.log("User score: " + humanScore);
-    console.log("Computer score: " + computerScore);    
-    console.log("Game result: " + "\n" + gameResult);
+    options.addEventListener("click", (e) => {
+        let humanSelection = e.target.id;
+        let computerSelection = getComputerChoice();
+        if (humanScore === 5 || computerScore === 5) {
+            [humanScore, computerScore] = [0, 0];
+            [humanScoreDisplay.textContent, computerScoreDisplay.textContent] = [humanScore, computerScore];
+        }
+        playRound(humanSelection, computerSelection);
+    })
+    
+    // console.log("User score: " + humanScore);
+    // console.log("Computer score: " + computerScore);    
+    // console.log("Game result: " + "\n" + gameResult);
 
 }
     
-playGame(2)
+playGame()
