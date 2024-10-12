@@ -58,8 +58,6 @@ function playGame() {
         if (humanScore === 5 || computerScore === 5) {
             const gameResult = humanScore === 5 ? "You won!" : "You lost!" ;
             resultsDisplay.textContent = gameResult;
-            
-            
         }
     }    
 
@@ -72,11 +70,6 @@ function playGame() {
         }
         playRound(humanSelection, computerSelection);
     })
-    
-    // console.log("User score: " + humanScore);
-    // console.log("Computer score: " + computerScore);    
-    // console.log("Game result: " + "\n" + gameResult);
-
 }
     
 playGame()
